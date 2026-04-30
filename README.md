@@ -9,8 +9,21 @@
  |Maya  |>=2025  |
 
  ------
- ## Limb Rigger
+ ## Set Tracker
+ <img src="assets/setTracker.png" width=100>
 
- <img src="assets/Icon.png" width=300>
- 
- * Rig arms and legs with ikfk blend
+## What it dose:
+A selction tool that helps you have easy access and controler over your customs selection groups
+
+<img src="assets/setTracker_Tool.png" width=300>
+
+## How to create a set:
+ * Select controls 
+ * Type name in the "enter set name bar" 
+ * Click “create set” 
+
+## How to delete a set:
+  After creating a set, a name box will appear in the existing set portion of the box. using the "X" button you can get rid of any unwanted groups 
+
+  ***Note this will not delete your controls off the model just remove them from the group created ***
+## How to add a selection to an existing group 

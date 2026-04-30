@@ -4,16 +4,14 @@ class MayaUI:
     def __init__(self): #run automatically
         self.window = "mySetWindow" #stores a uqique name for the window so maya can track it
 
-# ============================
-# PERSISTENT SET STORAGE (FIXED - BULLETPROOF)
-# ============================
-        self.master_set = "MY_SET_GRP"
+
+        self.master_set = "MY_SET_GRP"#
 
         # ensure master exists on startup
-        self.ensure_master_set()
+        self.ensure_master_set()#
 
-        if mc.window(self.window, exists=True):
-            mc.deleteUI(self.window)
+        if mc.window(self.window, exists=True):#
+            mc.deleteUI(self.window)#
 
         self.window = mc.window(self.window, title="Set Manager", widthHeight=(300, 200)) #this makes a new window with a set size and the name set mmanager
 
@@ -26,32 +24,26 @@ class MayaUI:
         mc.button(label="Create Set", command=self.create_set) #adds a bnt that runs the fucnction "create set"
         mc.button(label="Add Selection to Set", command=self.add_to_set) #adds a bnt that runs the fuction "add to set"
        
- # =========================
- #UI area for set buttons
- # =========================
-        mc.separator(height=10, style='in')
-        mc.text(label="Existing Sets:")
 
-        self.scroll = mc.scrollLayout(height=120)
-        self.button_column = mc.columnLayout(parent=self.scroll, adjustableColumn=True)
+        mc.separator(height=10, style='in')#
+        mc.text(label="Existing Sets:")#
 
-        mc.showWindow(self.window)
+        self.scroll = mc.scrollLayout(height=120)#
+        self.button_column = mc.columnLayout(parent=self.scroll, adjustableColumn=True)#
+
+        mc.showWindow(self.window)#
 
         # build UI from Maya scene (NOT python memory)
-        self.refresh_set_buttons()
+        self.refresh_set_buttons()#
 
-# =============================
-# SAFE MASTER SET HANDLER (NEW CORE FIX)
-# =============================
-    def ensure_master_set(self):
+
+    def ensure_master_set(self):#
         # This prevents "No object matches name: MY_UI_SETS"
-        if not mc.objExists(self.master_set):
+        if not mc.objExists(self.master_set):#
             self.master_set = mc.sets(name=self.master_set, empty=True)
-        return self.master_set
+        return self.master_set#
 
-# -----------------------------
-# CREATE SET
-# -----------------------------
+
     def create_set(self, *args): # defines a fuction that creates a new selection set when called
         name = mc.textField(self.set_name_field, q=True, text=True) # this gets the text the user typed in the input field
 
@@ -59,23 +51,19 @@ class MayaUI:
             mc.warning("Please enter a set name") # This is the warring text you get if you forget to type a name
             return #stops the fuction early if no name is given
         
-        if mc.objExists(name):
-            mc.warning("set already exists")
-            return
+        if mc.objExists(name):#
+            mc.warning("set already exists")#
+            return#
 
         mc.sets(name=name) #creates a new maya set with the given name 
         mc.warning(f"Set created: {name}") #prints a confirmation message
 
-# =========================
-# SAFE ADD TO MASTER SET
-# =========================
-        mc.sets(name, add=self.ensure_master_set())
 
-        self.refresh_set_buttons()
+        mc.sets(name, add=self.ensure_master_set())#
 
-# -----------------------------
-# ADD SELECTED OBJECTS TO SET
-# -----------------------------
+        self.refresh_set_buttons()#
+
+
     def add_to_set(self, *args): # defines a fuction that adds selected objects to a set 
         name = mc.textField(self.set_name_field, q=True, text=True) #gets the given name from the ui
 
@@ -92,9 +80,7 @@ class MayaUI:
         mc.sets(selection, add=name) #adds selected objects into the name set
         mc.warning(f"Added {len(selection)} objects to {name}") # confrims how many objects were added
 
-# -----------------------------
-# SELECT SET CONTENTS
-# -----------------------------
+
     def select_set(self, *args): #defines a fuction that selects everything inside a set 
         name = mc.textField(self.set_name_field, q=True, text=True) # Gets the set name from the ui input 
 
@@ -102,54 +88,50 @@ class MayaUI:
             mc.warning("Set does not exist") # warrning text if it dose not exist
             return #stops execution if invalid
 
-        members = mc.sets(name, q=True) or []
-        mc.select(members)
+        members = mc.sets(name, q=True) or []#
+        mc.select(members)#
         mc.warning(f"Selected contents of {name}") #confirms selections
 
-# =============================
-# DELETE SET FUNCTION
-# =============================
-    def delete_set(self, set_name):
 
-        if not mc.objExists(set_name):
-            mc.warning("Set does not exist")
-            return
+    def delete_set(self, set_name):#
 
-        mc.delete(set_name)
+        if not mc.objExists(set_name):#
+            mc.warning("Set does not exist")#
+            return#
+
+        mc.delete(set_name)#
 
         # SAFE cleanup from master set
-        master = self.ensure_master_set()
-        if mc.objExists(master):
-            members = mc.sets(master, q=True) or []
-            if set_name in members:
-                mc.sets(set_name, remove=master)
+        master = self.ensure_master_set()#
+        if mc.objExists(master):#
+            members = mc.sets(master, q=True) or []#
+            if set_name in members:#
+                mc.sets(set_name, remove=master)#
 
-        mc.warning(f"Deleted set: {set_name}")
+        mc.warning(f"Deleted set: {set_name}")#
 
-        self.refresh_set_buttons()
+        self.refresh_set_buttons()#
 
-# =============================
-# refresh UI buttons
-# =============================
-    def refresh_set_buttons(self):
 
-        children = mc.columnLayout(self.button_column, q=True, ca=True)
-        if children:
-            for child in children:
-                mc.deleteUI(child)
+    def refresh_set_buttons(self):#
+
+        children = mc.columnLayout(self.button_column, q=True, ca=True)#
+        if children:#
+            for child in children:#
+                mc.deleteUI(child)#
 
         # SAFE query using ensure_master_set
-        sets = mc.sets(self.ensure_master_set(), q=True)
+        sets = mc.sets(self.ensure_master_set(), q=True)#
 
-        if not sets:
-            sets = []
+        if not sets:#
+            sets = []#
 
-        for s in sets:
+        for s in sets:#
 
-            if not mc.objExists(s):
-                continue
+            if not mc.objExists(s):#
+                continue#
 
-            mc.rowLayout(numberOfColumns=2, adjustableColumn=1, parent=self.button_column)
+            mc.rowLayout(numberOfColumns=2, adjustableColumn=1, parent=self.button_column)#
 
             mc.button(
                 label=s,
@@ -164,9 +146,7 @@ class MayaUI:
 
             mc.setParent('..')
 
-# -----------------------------
-# select set from UI button
-# -----------------------------
+
     def select_specific_set(self, set_name):
 
         if not mc.objExists(set_name):
