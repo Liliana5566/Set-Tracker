@@ -14,7 +14,7 @@
 ## What it dose:
 A selction tool that helps you have easy access and controler over your customs selection groups.
 
-
+<img src="assets/setTracker_Tool.png" width=300>
 
 ## How to create a set:
  * Select controls 
