@@ -5,15 +5,14 @@
  |Toll  | version|
  |----- |--------|
  |python| 3.12   |
- |PySide| 6      |
- |Maya  |>=2025  |
+ |Maya  |2025+   |
 
  ------
  ## Set Tracker
  <img src="assets/setTracker.png" width=100>
 
 ## What it dose:
-A selction tool that helps you have easy access and controler over your customs selection groups
+A selction tool that helps you have easy access and controler over your customs selection groups.
 
 <img src="assets/setTracker_Tool.png" width=300>
 
@@ -26,4 +25,3 @@ A selction tool that helps you have easy access and controler over your customs 
   After creating a set, a name box will appear in the existing set portion of the box. using the "X" button you can get rid of any unwanted groups 
 
   ***Note this will not delete your controls off the model just remove them from the group created ***
-## How to add a selection to an existing group 
